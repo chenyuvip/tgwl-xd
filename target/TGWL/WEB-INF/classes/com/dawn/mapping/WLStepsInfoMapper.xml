@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dawn.dao.WLStepsInfoMapper">
+  <resultMap id="BaseResultMap" type="com.dawn.pojo.WLStepsInfo">
+    <id column="stepid" jdbcType="INTEGER" property="stepid" />
+    <result column="stepinfo" jdbcType="VARCHAR" property="stepinfo" />
+    <result column="hours" jdbcType="INTEGER" property="hours" />
+    <result column="minutes" jdbcType="INTEGER" property="minutes" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    stepid, stepinfo, hours, minutes
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from m_wlsteps
+    where stepid = #{stepid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from m_wlsteps
+    where stepid = #{stepid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dawn.pojo.WLStepsInfo">
+    insert into m_wlsteps (stepid, stepinfo, hours, 
+      minutes)
+    values (#{stepid,jdbcType=INTEGER}, #{stepinfo,jdbcType=VARCHAR}, #{hours,jdbcType=INTEGER}, 
+      #{minutes,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dawn.pojo.WLStepsInfo">
+    insert into m_wlsteps
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="stepid != null">
+        stepid,
+      </if>
+      <if test="stepinfo != null">
+        stepinfo,
+      </if>
+      <if test="hours != null">
+        hours,
+      </if>
+      <if test="minutes != null">
+        minutes,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="stepid != null">
+        #{stepid,jdbcType=INTEGER},
+      </if>
+      <if test="stepinfo != null">
+        #{stepinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="hours != null">
+        #{hours,jdbcType=INTEGER},
+      </if>
+      <if test="minutes != null">
+        #{minutes,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dawn.pojo.WLStepsInfo">
+    update m_wlsteps
+    <set>
+      <if test="stepinfo != null">
+        stepinfo = #{stepinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="hours != null">
+        hours = #{hours,jdbcType=INTEGER},
+      </if>
+      <if test="minutes != null">
+        minutes = #{minutes,jdbcType=INTEGER},
+      </if>
+    </set>
+    where stepid = #{stepid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dawn.pojo.WLStepsInfo">
+    update m_wlsteps
+    set stepinfo = #{stepinfo,jdbcType=VARCHAR},
+      hours = #{hours,jdbcType=INTEGER},
+      minutes = #{minutes,jdbcType=INTEGER}
+    where stepid = #{stepid,jdbcType=INTEGER}
+  </update>
+  <select id="queryWLSteps" parameterType="java.lang.String" resultType="com.dawn.pojo.WLStepsInfo">
+    select 
+    <include refid="Base_Column_List" />
+    from m_wlsteps
+  </select>
+</mapper>

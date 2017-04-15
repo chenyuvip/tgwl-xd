@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dawn.dao.OrderInfoMapper">
+  <resultMap id="BaseResultMap" type="com.dawn.pojo.OrderInfo">
+    <id column="orderno" jdbcType="VARCHAR" property="orderno" />
+    <result column="ordertime" jdbcType="VARCHAR" property="ordertime" />
+    <result column="itime" jdbcType="TIMESTAMP" property="itime" />
+    <result column="expressno" jdbcType="VARCHAR" property="expressno" />
+    <result column="currentstep" jdbcType="INTEGER" property="currentstep" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    orderno, ordertime, itime, expressno, currentstep
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from m_orderinfo
+    where orderno = #{orderno,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from m_orderinfo
+    where orderno = #{orderno,jdbcType=VARCHAR}
+  </delete>
+  <delete id="clearWrongOrders">
+    delete from m_orderinfo where orderno = null or orderno=""  or ordertime = null
+  </delete>
+  <insert id="insert" parameterType="com.dawn.pojo.OrderInfo">
+    insert into m_orderinfo (orderno, ordertime, itime, 
+      expressno, currentstep)
+    values (#{orderno,jdbcType=VARCHAR}, #{ordertime,jdbcType=VARCHAR}, #{itime,jdbcType=TIMESTAMP}, 
+      #{expressno,jdbcType=VARCHAR}, #{currentstep,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dawn.pojo.OrderInfo">
+    insert into m_orderinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderno != null">
+        orderno,
+      </if>
+      <if test="ordertime != null">
+        ordertime,
+      </if>
+      <if test="itime != null">
+        itime,
+      </if>
+      <if test="expressno != null">
+        expressno,
+      </if>
+      <if test="currentstep != null">
+        currentstep,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderno != null">
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="ordertime != null">
+        #{ordertime,jdbcType=VARCHAR},
+      </if>
+      <if test="itime != null">
+        #{itime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expressno != null">
+        #{expressno,jdbcType=VARCHAR},
+      </if>
+      <if test="currentstep != null">
+        #{currentstep,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dawn.pojo.OrderInfo">
+    update m_orderinfo
+    <set>
+      <if test="ordertime != null">
+        ordertime = #{ordertime,jdbcType=VARCHAR},
+      </if>
+      <if test="itime != null">
+        itime = #{itime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expressno != null">
+        expressno = #{expressno,jdbcType=VARCHAR},
+      </if>
+      <if test="currentstep != null">
+        currentstep = #{currentstep,jdbcType=INTEGER},
+      </if>
+    </set>
+    where orderno = #{orderno,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dawn.pojo.OrderInfo">
+    update m_orderinfo
+    set ordertime = #{ordertime,jdbcType=VARCHAR},
+      itime = #{itime,jdbcType=TIMESTAMP},
+      expressno = #{expressno,jdbcType=VARCHAR},
+      currentstep = #{currentstep,jdbcType=INTEGER}
+    where orderno = #{orderno,jdbcType=VARCHAR}
+  </update>
+  <select id="queryUnGeneratedOrders" parameterType="java.lang.String" resultType="com.dawn.pojo.OrderInfo">
+    select 
+    <include refid="Base_Column_List" />
+    from m_orderinfo where currentstep=0
+  </select>
+  <update id="updateGenerateStatus" parameterType="java.lang.String">
+    update m_orderinfo
+    set currentstep = 1
+    where orderno = #{orderno,jdbcType=VARCHAR}
+  </update>
+</mapper>

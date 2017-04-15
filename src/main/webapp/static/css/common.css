@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+.head-nav{
+	height: 248px;
+}
+.foot{
+	height: 56px;
+}
+p {
+    margin: 0px;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern" 1;
+    -webkit-font-feature-settings: "kern";
+    -moz-font-feature-settings: "kern";
+    -moz-font-feature-settings: "kern=1";
+    font-kerning: normal;
+}
+body { font-family:"微软雅黑";font-size:16px; margin:20px; padding:0; text-align:left;} 
+dl,dt,dd,ul,ol,li,p,div,input,h1,h2,h3,h4,h5,h6 { margin:0; padding:0;} 
+li { list-style:none;} 
+h2 { font-family:"微软雅黑"; font-size:24px; text-align:center; line-height:32px;} 
+h5 { font-size:12px; text-align:center; font-weight:normal; color:#666; line-height:28px;} 

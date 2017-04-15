@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<decorators defaultdir="/WEB-INF/layout/">
+	<decorator name="main" page="main.ftl"><!--装饰文件为main.ftl-->
+		<pattern>/*.htm</pattern>
+	</decorator>
+	<excludes> <!--过滤不被装饰的页面-->
+		<pattern>/index.ftl</pattern>
+	</excludes>
+</decorators>

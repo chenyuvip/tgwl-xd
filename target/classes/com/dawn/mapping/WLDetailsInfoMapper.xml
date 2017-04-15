@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dawn.dao.WLDetailsInfoMapper">
+  <resultMap id="BaseResultMap" type="com.dawn.pojo.WLDetailsInfo">
+    <id column="orderno" jdbcType="VARCHAR" property="orderno" />
+    <id column="stepid" jdbcType="INTEGER" property="stepid" />
+    <result column="stepinfo" jdbcType="VARCHAR" property="stepinfo" />
+    <result column="curtime" jdbcType="VARCHAR" property="curtime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    orderno, stepid, stepinfo, curtime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.dawn.pojo.WLDetailsInfoKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from m_wldetails
+    where orderno = #{orderno,jdbcType=VARCHAR}
+      and stepid = #{stepid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="queryWLDetails" parameterType="java.lang.String" resultType="com.dawn.pojo.WLDetailsInfo">
+    select 
+    <include refid="Base_Column_List" />
+    from m_wldetails
+    where orderno = #{orderno,jdbcType=VARCHAR} and curtime &lt;= SYSDATE()
+    order by stepid asc
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="com.dawn.pojo.WLDetailsInfoKey">
+    delete from m_wldetails
+    where orderno = #{orderno,jdbcType=VARCHAR}
+      and stepid = #{stepid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dawn.pojo.WLDetailsInfo">
+    insert into m_wldetails (orderno, stepid, stepinfo, 
+      curtime)
+    values (#{orderno,jdbcType=VARCHAR}, #{stepid,jdbcType=INTEGER}, #{stepinfo,jdbcType=VARCHAR}, 
+      #{curtime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dawn.pojo.WLDetailsInfo">
+    insert into m_wldetails
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderno != null">
+        orderno,
+      </if>
+      <if test="stepid != null">
+        stepid,
+      </if>
+      <if test="stepinfo != null">
+        stepinfo,
+      </if>
+      <if test="curtime != null">
+        curtime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderno != null">
+        #{orderno,jdbcType=VARCHAR},
+      </if>
+      <if test="stepid != null">
+        #{stepid,jdbcType=INTEGER},
+      </if>
+      <if test="stepinfo != null">
+        #{stepinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="curtime != null">
+        #{curtime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dawn.pojo.WLDetailsInfo">
+    update m_wldetails
+    <set>
+      <if test="stepinfo != null">
+        stepinfo = #{stepinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="curtime != null">
+        curtime = #{curtime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where orderno = #{orderno,jdbcType=VARCHAR}
+      and stepid = #{stepid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dawn.pojo.WLDetailsInfo">
+    update m_wldetails
+    set stepinfo = #{stepinfo,jdbcType=VARCHAR},
+      curtime = #{curtime,jdbcType=VARCHAR}
+    where orderno = #{orderno,jdbcType=VARCHAR}
+      and stepid = #{stepid,jdbcType=INTEGER}
+  </update>
+  
+  
+</mapper>
